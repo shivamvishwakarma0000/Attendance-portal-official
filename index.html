@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Student Attendance Portal</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,10 +12,9 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
             display: flex;
-            flex-direction: column; /* Changed to column to allow footer to stack */
-            justify-content: space-between; /* Pushes content and footer apart */
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
             padding: 20px;
         }
         .container {
@@ -27,8 +27,6 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
-            box-sizing: border-box;
-            flex-grow: 1; /* Allows container to take up available space */
         }
         .roll-button {
             width: 45px;
@@ -37,17 +35,16 @@
             justify-content: center;
             align-items: center;
             border-radius: 50%;
-            background-color: #e0e7ff;
-            color: #4f46e5;
+            background-color: #e0e7ff; /* Light blue for absent */
+            color: #4f46e5; /* Darker blue text */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             border: 2px solid transparent;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-            flex-shrink: 0;
         }
         .roll-button.present {
-            background-color: #10b981;
+            background-color: #10b981; /* Green for present */
             color: #ffffff;
             border: 2px solid #059669;
             box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
@@ -80,85 +77,25 @@
             margin-top: 20px;
             font-weight: 600;
             text-align: center;
-            display: none;
+            display: none; /* Hidden by default */
         }
         .message-box.success {
-            background-color: #d1fae5;
-            color: #065f46;
+            background-color: #d1fae5; /* Green light */
+            color: #065f46; /* Green dark */
             border: 1px solid #10b981;
         }
         .message-box.error {
-            background-color: #fee2e2;
-            color: #991b1b;
+            background-color: #fee2e2; /* Red light */
+            color: #991b1b; /* Red dark */
             border: 1px solid #ef4444;
         }
 
-        .roll-numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
-            gap: 10px;
-            justify-content: center;
-            padding: 0 5px;
-            box-sizing: border-box;
-        }
-
-        .subject-selection-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-        .subject-selection-container label {
-            text-align: center;
-        }
-        .subject-selection-container select {
-            width: 100%;
-            max-width: 250px;
-        }
-
-        /* Footer Styles */
-        .footer {
-            margin-top: auto; /* Pushes the footer to the bottom */
-            padding: 15px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #6b7280; /* Gray text */
-            background-color: #ffffff; /* Same as container background or slightly different */
-            border-top: 1px solid #e5e7eb; /* Light border at the top */
-            border-radius: 0 0 15px 15px; /* Match container bottom radius if body padding is removed */
-            width: 100%;
-            max-width: 900px; /* Match container max-width */
-            box-sizing: border-box;
-        }
-
-        /* Adjust body padding if footer is within the same flex container and you want it to align */
-        body {
-            padding-bottom: 0; /* Remove body padding at bottom to let footer span full width */
-        }
-        .container {
-            border-radius: 15px 15px 0 0; /* Adjust container radius if footer is separate */
-        }
-
-
+        /* Responsive grid for roll numbers */
         @media (min-width: 640px) {
             .roll-numbers-grid {
-                grid-template-columns: repeat(8, minmax(45px, 1fr));
-                gap: 12px;
-                padding: 0;
-            }
-            .subject-selection-container {
-                flex-direction: row;
-                justify-content: center;
-            }
-            .subject-selection-container label {
-                text-align: left;
-            }
-            .subject-selection-container select {
-                width: auto;
-                max-width: none;
+                grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
             }
         }
-
         @media (min-width: 768px) {
             .roll-numbers-grid {
                 grid-template-columns: repeat(10, minmax(45px, 1fr));
@@ -175,9 +112,10 @@
     <div class="container">
         <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6">Student Attendance Portal</h1>
 
-        <div class="subject-selection-container">
-            <label for="subjectSelect" class="text-lg font-medium text-gray-700">Select Subject:</label>
-            <select id="subjectSelect" class="block p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-800">
+        <!-- Subject Selection -->
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+            <label for="subjectSelect" class="text-lg font-medium text-gray-700 w-full sm:w-auto">Select Subject:</label>
+            <select id="subjectSelect" class="block w-full sm:w-64 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-800">
                 <option value="">-- Choose Subject --</option>
                 <option value="DAA">DAA</option>
                 <option value="DAA Lab">DAA Lab</option>
@@ -193,46 +131,59 @@
             </select>
         </div>
 
-        <div id="rollNumbersContainer" class="roll-numbers-grid">
-            </div>
+        <!-- Roll Number Buttons -->
+        <div id="rollNumbersContainer" class="roll-numbers-grid grid gap-3 justify-center">
+            <!-- Roll number buttons will be generated here by JavaScript -->
+        </div>
 
+        <!-- Submit Button -->
         <button id="submitAttendanceBtn" class="submit-button w-full sm:w-fit self-center px-8">Submit Attendance</button>
 
+        <!-- Message Box for feedback -->
         <div id="messageBox" class="message-box"></div>
     </div>
 
-    <footer class="footer">
-        Powered by Shivam
-    </footer>
-
     <script>
-        // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
-        // Example: const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_YOUR_DEPLOYMENT_ID/exec";
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxC-sZW-uCdDtPKRtpOyz9T57mJn9giqRVWmRycT4S3UZkmr_1-hj_jt9CvA_H-G7rrtw/exec"; // <<<--- IMPORTANT: Update this URL!
+        // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL (NEW DEPLOYMENT!)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn4M9XReFdDjvPwNYaRK4znyCMF0WaieAAhslpyugG8mRf6-2O3e-DCMmgsBxO5_YJJg/exec"; // <<<--- IMPORTANT: Update this URL!
 
         const rollNumbersContainer = document.getElementById('rollNumbersContainer');
         const subjectSelect = document.getElementById('subjectSelect');
         const submitAttendanceBtn = document.getElementById('submitAttendanceBtn');
         const messageBox = document.getElementById('messageBox');
 
-        const attendanceStatus = Array(72).fill(false);
+        // Array to store the presence status of each roll number (true for present, false for absent)
+        // Initialize all students as absent by default
+        const attendanceStatus = Array(72).fill(false); // Roll numbers 1-72
 
+        /**
+         * Generates and appends roll number buttons to the container.
+         * Each button is initialized as 'absent' (default styling).
+         * Adds click event listener to toggle 'present' status.
+         */
         function generateRollButtons() {
             for (let i = 1; i <= 72; i++) {
                 const button = document.createElement('div');
                 button.classList.add('roll-button');
                 button.textContent = i;
-                button.dataset.roll = i;
+                button.dataset.roll = i; // Store roll number as a data attribute
 
+                // Add click listener to toggle presence
                 button.addEventListener('click', () => {
                     button.classList.toggle('present');
+                    // Update the attendanceStatus array based on button's current state
                     attendanceStatus[i - 1] = button.classList.contains('present');
-                    hideMessage();
+                    hideMessage(); // Hide any previous messages when user interacts
                 });
                 rollNumbersContainer.appendChild(button);
             }
         }
 
+        /**
+         * Shows a message in the message box.
+         * @param {string} message - The message to display.
+         * @param {boolean} isSuccess - True for success message (green), false for error (red).
+         */
         function showMessage(message, isSuccess) {
             messageBox.textContent = message;
             messageBox.classList.remove('success', 'error');
@@ -242,28 +193,30 @@
                 messageBox.classList.add('error');
             }
             messageBox.style.display = 'block';
+            // Auto-hide message after 5 seconds
             setTimeout(() => {
                 hideMessage();
-            },5000);
+            }, 5000);
         }
 
+        /**
+         * Hides the message box.
+         */
         function hideMessage() {
             messageBox.style.display = 'none';
         }
 
-        function resetRollNumbers() {
-            document.querySelectorAll('.roll-button').forEach(button => {
-                button.classList.remove('present');
-            });
-            attendanceStatus.fill(false);
-        }
-
+        /**
+         * Handles the submission of attendance data.
+         * Gathers selected subject and present roll numbers, then sends to Apps Script.
+         */
         submitAttendanceBtn.addEventListener('click', async () => {
             const selectedSubject = subjectSelect.value;
             const presentRollNumbers = attendanceStatus
                 .map((isPresent, index) => isPresent ? index + 1 : null)
                 .filter(roll => roll !== null);
 
+            // Basic validation
             if (!selectedSubject) {
                 showMessage("Please select a subject before submitting.", false);
                 return;
@@ -273,26 +226,27 @@
                 return;
             }
 
-            showMessage("Submitting attendance...", true);
+            showMessage("Submitting attendance...", true); // Show loading message
 
             try {
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'cors',
+                    mode: 'cors', // Crucial for cross-origin requests to Apps Script
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
                         subject: selectedSubject,
-                        rollNumbers: JSON.stringify(presentRollNumbers)
+                        rollNumbers: JSON.stringify(presentRollNumbers) // Send as JSON string
                     }).toString(),
                 });
 
-                const result = await response.json();
+                const result = await response.json(); // Apps Script sends JSON response
 
                 if (result.status === 'success') {
                     showMessage(result.message, true);
-                    resetRollNumbers();
+                    // Optionally, reset the form after successful submission
+                    resetForm();
                 } else {
                     showMessage(`Error: ${result.message}`, false);
                 }
@@ -302,11 +256,21 @@
             }
         });
 
-        subjectSelect.addEventListener('change', () => {
-            resetRollNumbers();
-            hideMessage();
-        });
+        /**
+         * Resets the form to its initial state:
+         * - Deselects subject.
+         * - Marks all roll number buttons as absent.
+         * - Resets attendanceStatus array.
+         */
+        function resetForm() {
+            subjectSelect.value = "";
+            document.querySelectorAll('.roll-button').forEach(button => {
+                button.classList.remove('present');
+            });
+            attendanceStatus.fill(false); // Reset all to absent
+        }
 
+        // Initialize the page by generating roll number buttons
         generateRollButtons();
     </script>
 </body>
